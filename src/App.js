@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Starred from './pages/starred.jsx';
 
+
 function App() {
   return (
     
@@ -20,6 +21,7 @@ function App() {
       </Route>
 
     </Switch>
+   
   );
 }
 
