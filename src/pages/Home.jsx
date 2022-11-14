@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import MainPagelayout from '../components/MainPagelayout'
 import { getApi } from '../misc/APIconfig';
+ import ShowGrid from '../components/show/showGrid'
+ import ActorGrid  from '../components/Actor/actorGrid';
 
 const Home = () => {
     const [inputs, setInputs] = useState('');
     const [results, setResults] = useState(null);
-    const[searchOption, setSearchOption] = useState('shows');
+    const [searchOption, setSearchOption] = useState('shows');
 
     const isSearchShow = searchOption === 'shows';
 
@@ -17,7 +19,7 @@ const Home = () => {
             .then(result => {
                 setResults(result)
             });
-           
+
     }
     // To call onSearch when user clicks enter.
     const onKeyDown = (ev) => {
@@ -29,9 +31,9 @@ const Home = () => {
     const onInputChange = (ev) => {
         setInputs(ev.target.value);
     }
-    
+
     // To update the selected radio button 
-    const onRadioChange =(ev)=>{
+    const onRadioChange = (ev) => {
         setSearchOption(ev.target.value);
     }
     //To conditionally render the output from the API
@@ -42,11 +44,11 @@ const Home = () => {
         }
 
         if (results && results.length > 0) {
-            return results[0].show
-            ? results.map(item => (<div key={item.show.id}>{item.show.name}</div>))
-            : results.map(item => (
-                <div key={item.person.id}>{item.person.name}</div>
-                ))
+            return results[0].show ? (
+                   <ShowGrid data={results} />
+                ) : (
+                    <ActorGrid data={results} />
+                )
         }
         return null;
     }
@@ -54,30 +56,30 @@ const Home = () => {
     return (
         <MainPagelayout>
             <input type="text" onChange={onInputChange} onKeyDown={onKeyDown} value={inputs} />
-            
-            <div> 
+
+            <div>
                 <label htmlFor='onSearch-Shows'>
-                Shows
-                <input type="radio"
-                 id="onSearch-Shows"
-                 value="shows"
-                 onChange={onRadioChange}
-                 checked={isSearchShow}
-                 />
+                    Shows
+                    <input type="radio"
+                        id="onSearch-Shows"
+                        value="shows"
+                        onChange={onRadioChange}
+                        checked={isSearchShow}
+                    />
                 </label>
 
                 <label htmlFor='onSearch-Actors'>
-                Actors
-                <input type="radio" 
-                id="onSearch-Actors"
-                value="people"
-                onChange={onRadioChange}
-                checked={!isSearchShow}
-                />
+                    Actors
+                    <input type="radio"
+                        id="onSearch-Actors"
+                        value="people"
+                        onChange={onRadioChange}
+                        checked={!isSearchShow}
+                    />
                 </label>
-                </div>
+            </div>
 
-                <button type="button" onClick={onSearch} >Search</button>
+            <button type="button" onClick={onSearch} >Search</button>
 
             {renderResults()}
         </MainPagelayout>
