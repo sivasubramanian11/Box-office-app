@@ -12,7 +12,7 @@ const Home = () => {
     const isSearchShow = searchOption === 'shows';
 
 
-    // To search the result from Api and console.
+    // To search the result from Api.
     const onSearch = () => {
 
         getApi(`/search/${searchOption}?q=${inputs}`)

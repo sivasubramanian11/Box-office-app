@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import {ShowSearchCard} from './ShowCard.styled';
 
 const ShowCard = ({id,name,image,summary}) => {
   const summaryAsText = summary ?
   `${summary.split(' ').slice(0,10).join(' ').replace(/<.+?>/g, '')}...` 
   : 'No description';
   return (
-    <div>
-        <div>
+    <ShowSearchCard>
+        <div className='img-wrapper'>
           <img src= {image} alt="show"/>
         </div>
 
@@ -15,11 +16,11 @@ const ShowCard = ({id,name,image,summary}) => {
 
         <p>{summaryAsText}</p>
 
-        <div>
+        <div className='btns'>
           <Link to={`/shows/${id}`}>Read More</Link>
           <button type="button">Star Me</button>
         </div>
-    </div>
+    </ShowSearchCard>
   );
 };
 export default ShowCard
