@@ -1,7 +1,13 @@
 
 import React, { useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
+import ShowMainData from '../components/show/ShowMainData';
+import ShowDetails from '../components/show/ShowDetails';
+import ShowCast from '../components/show/ShowCast';
 import { getApi } from '../misc/APIconfig';
+import ShowSeasons from '../components/show/ShowSeasons';
+
+
 
 const reducer=(prevState, action)=>{
   switch(action.type){
@@ -25,7 +31,7 @@ const initialState ={
 const Show = () => {
   const { id } = useParams();
 
-  const [{show,isLoading, error}, dispatch]= useReducer(reducer, initialState)
+  const [{show,isLoading, error}, dispatch]= useReducer(reducer, initialState);
 
   useEffect(() => {
     let isMounted = true;
@@ -47,17 +53,50 @@ const Show = () => {
     };
   }, [id]);
 
-  console.log('show', show);
+  //  console.log('show', show);
   
-  if (isLoading) {
-    return <div>Data is being loaded</div>;
-  }
+  if(show){
+  return (
+  <div>
+    
+    <ShowMainData 
+    image={show.image}
+    name={show.name}
+    rating={show.rating}
+    summary={show.summary}
+    tags={show.genres}
+    />
 
-  if (error) {
-    return <div>Error occured: {error}</div>;
-  }
+    <h2>Details</h2>
+    <div>
+      <ShowDetails 
+      details={show.details} 
+      network={show.network} 
+      premiered={show.premiered}
+      />
+    </div>
 
-  return <div>this is show page</div>;
+    <h2>Seasons</h2>
+    <div>
+      <ShowSeasons 
+      season={show._embedded.seasons} />
+    </div>
+
+    <h2>Cast</h2>
+    <div>
+      <ShowCast  
+      cast={show._embedded.cast} />
+    </div>
+  </div>
+  );
+  }
+if (error) {
+  return <div>Error occured: {error}</div>;
+}
+if(isLoading){
+return <div>Data is being loaded</div>
+}
 };
+
 
 export default Show;
