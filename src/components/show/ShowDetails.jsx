@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { DetailsWrapper } from './ShowDetails.styled';
 
 const showDetails = ({status,premiered, network}) => {
   return (
-    <div>
+    <DetailsWrapper>
         <p>
         status: <span> {status} </span>
         </p>
@@ -11,7 +12,7 @@ const showDetails = ({status,premiered, network}) => {
             {premiered} {network ? `on ${network.name}` : null}
         </span>
         </p>
-    </div>
+    </DetailsWrapper>
   )
 }
 

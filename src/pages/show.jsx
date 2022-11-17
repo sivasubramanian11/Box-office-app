@@ -6,6 +6,7 @@ import ShowDetails from '../components/show/ShowDetails';
 import ShowCast from '../components/show/ShowCast';
 import { getApi } from '../misc/APIconfig';
 import ShowSeasons from '../components/show/ShowSeasons';
+import { ShowPageWrapper, InfoBlock } from './show.styled';
 
 
 
@@ -57,7 +58,7 @@ const Show = () => {
   
   if(show){
   return (
-  <div>
+  <ShowPageWrapper>
     
     <ShowMainData 
     image={show.image}
@@ -68,26 +69,26 @@ const Show = () => {
     />
 
     <h2>Details</h2>
-    <div>
+    <InfoBlock>
       <ShowDetails 
       details={show.details} 
       network={show.network} 
       premiered={show.premiered}
       />
-    </div>
+    </InfoBlock>
 
     <h2>Seasons</h2>
-    <div>
+    <InfoBlock>
       <ShowSeasons 
       season={show._embedded.seasons} />
-    </div>
+    </InfoBlock>
 
     <h2>Cast</h2>
-    <div>
+    <InfoBlock>
       <ShowCast  
       cast={show._embedded.cast} />
-    </div>
-  </div>
+    </InfoBlock>
+  </ShowPageWrapper>
   );
   }
 if (error) {
