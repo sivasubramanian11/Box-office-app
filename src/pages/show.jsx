@@ -1,24 +1,63 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import { getApi } from '../misc/APIconfig';
 
-// To fetch data from api and display when readmore btn is clicked
-const Show = () => {
-  const { id } = useParams();
-  const [show, setShow] = useState(null);
-  useEffect(() => {
-    getApi(`/shows/${id}?embed[]=seasons&embed[]=cast`)
-      .then(result => {
-        setShow(result)
-        console.log("useEffect rendered");
-      });
-  }, [id]);
-  console.log('show', show)
-  return (
-    <div>
-
-    </div>
-  )
+const reducer=(prevState, action)=>{
+  switch(action.type){
+    case 'FETCH_SUCCESS':{
+    return{isLoading:false, error:null, show:action.show }
+    }
+    case 'FETCH_FAILED':{
+      return {isLoading:false, error:action.error}
+    }
+    default: return prevState
+  } 
 }
 
-export default Show
+const initialState ={
+  show:null,
+  isLoading:true,
+  error:null
+}
+
+
+const Show = () => {
+  const { id } = useParams();
+
+  const [{show,isLoading, error}, dispatch]= useReducer(reducer, initialState)
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getApi(`/shows/${id}?embed[]=seasons&embed[]=cast`)
+      .then(results => {
+        if (isMounted) {
+          dispatch({type:'FETCH_SUCCESS', show:results})
+        }
+      })
+      .catch(err => {
+        if (isMounted) {
+         dispatch({type:'Fetch_FAILED', error:err.message})
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
+
+  console.log('show', show);
+  
+  if (isLoading) {
+    return <div>Data is being loaded</div>;
+  }
+
+  if (error) {
+    return <div>Error occured: {error}</div>;
+  }
+
+  return <div>this is show page</div>;
+};
+
+export default Show;
