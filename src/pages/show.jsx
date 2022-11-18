@@ -9,7 +9,6 @@ import ShowSeasons from '../components/show/ShowSeasons';
 import { ShowPageWrapper, InfoBlock } from './show.styled';
 
 
-
 const reducer=(prevState, action)=>{
   switch(action.type){
     case 'FETCH_SUCCESS':{
@@ -80,7 +79,7 @@ const Show = () => {
     <h2>Seasons</h2>
     <InfoBlock>
       <ShowSeasons 
-      season={show._embedded.seasons} />
+      seasons={show._embedded.seasons} />
     </InfoBlock>
 
     <h2>Cast</h2>
