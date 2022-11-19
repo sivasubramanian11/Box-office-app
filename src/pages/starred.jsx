@@ -8,7 +8,7 @@ import ShowGrid from '../components/show/showGrid';
 
 const Starred = () => {
 
-  const [Starred] = useShows();
+const [Starred] = useShows();
 const [isLoading, setIsLoading]=useState(true);
 const [error, setError] = useState(null);
 const [shows, setShows]= useState(null);
