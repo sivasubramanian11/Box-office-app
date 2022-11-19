@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 // To style Api result grid
-export const FlexGrid =styled.div
-`
+export const FlexGrid = styled.div
+  `
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
 `;
 // To adjust images card
 export const SearchCard = styled.div
-`
+  `
   width: 300px;
   height: 100%;
   margin: 0 15px 40px;
@@ -32,7 +32,7 @@ export const Star = styled.div`
   display: inline-block;
   width: 18px;
   height: 18px;
-  background-color: #ffc806;
+  background-color:${(props) => (props.active ? "yellow" : "black")};
   clip-path: polygon(
     50% 0%,
     61% 35%,
