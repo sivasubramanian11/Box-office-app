@@ -3,6 +3,7 @@ import MainPagelayout from '../components/MainPagelayout'
 import { getApi } from '../misc/APIconfig';
  import ShowGrid from '../components/show/showGrid'
  import ActorGrid  from '../components/Actor/actorGrid';
+import { RadioInputsWrapper, SearchButtonWrapper, SearchInput } from './Home.Styled';
 
 const Home = () => {
     const [inputs, setInputs] = useState('');
@@ -55,9 +56,9 @@ const Home = () => {
 
     return (
         <MainPagelayout>
-            <input type="text" onChange={onInputChange} onKeyDown={onKeyDown} value={inputs} />
+            <SearchInput type="text" onChange={onInputChange} onKeyDown={onKeyDown} value={inputs} />
 
-            <div>
+            <RadioInputsWrapper>
                 <label htmlFor='onSearch-Shows'>
                     Shows
                     <input type="radio"
@@ -77,10 +78,10 @@ const Home = () => {
                         checked={!isSearchShow}
                     />
                 </label>
-            </div>
-
+            </RadioInputsWrapper>
+            <SearchButtonWrapper>
             <button type="button" onClick={onSearch} >Search</button>
-
+            </SearchButtonWrapper>
             {renderResults()}
         </MainPagelayout>
     )
